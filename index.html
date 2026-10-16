@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>80/20 — пилатес, SPA и массаж в Астане</title>
+<meta name="description" content="80/20 — клуб здорового образа жизни в Астане: пилатес на реформерах, хаммам, SPA-программы и массаж. Цены и запись.">
+<style>
+  :root{
+    --bg:#faf7f2; --card:#ffffff; --ink:#23302b; --muted:#6b7a73;
+    --accent:#3e6158; --accent-dark:#2e4a43; --soft:#e4ece8; --warm:#e9d8c4;
+    --radius:18px; --shadow:0 8px 30px rgba(35,48,43,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  section{padding:72px 0}
+  h1,h2,h3{line-height:1.2;font-weight:700}
+  h2{font-size:clamp(26px,4vw,36px);margin-bottom:12px}
+  .lead{color:var(--muted);max-width:620px;margin-bottom:36px}
+
+  header{position:sticky;top:0;z-index:10;background:rgba(250,247,242,.92);backdrop-filter:blur(8px);border-bottom:1px solid #eee6da}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-size:22px;font-weight:800;letter-spacing:.5px}
+  .logo span{color:var(--accent)}
+  .logo-img{height:48px;width:48px;border-radius:50%;display:block;object-fit:cover}
+  nav ul{display:flex;gap:22px;list-style:none;font-size:15px}
+  nav a:hover{color:var(--accent)}
+  .btn{display:inline-block;background:var(--accent);color:#fff;padding:13px 26px;border-radius:999px;font-weight:600;border:0;cursor:pointer;font-size:16px;transition:.2s;text-align:center}
+  .btn:hover{background:var(--accent-dark);transform:translateY(-1px)}
+  .btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+  .btn.ghost:hover{background:var(--accent);color:#fff}
+  .burger{display:none;background:none;border:0;font-size:26px;cursor:pointer;color:var(--ink)}
+
+  .hero{padding:90px 0 80px;background:linear-gradient(135deg,var(--soft),var(--bg) 70%)}
+  .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+  .tag{display:inline-block;background:var(--warm);color:#6a4f2e;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;margin-bottom:18px}
+  .hero h1{font-size:clamp(34px,6vw,56px);margin-bottom:18px}
+  .hero p{color:var(--muted);font-size:18px;max-width:520px;margin-bottom:28px}
+  .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+  .ratio{background:var(--card);border-radius:28px;box-shadow:var(--shadow);padding:34px;text-align:center}
+  .ratio .big{font-size:72px;font-weight:800;color:var(--accent);line-height:1}
+  .ratio p{font-size:15px;margin:10px 0 0}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+  .card{background:var(--card);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+  .card .icon{font-size:32px;margin-bottom:12px}
+  .card h3{font-size:19px;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:15px}
+
+  .about{background:var(--card)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  .about ul{list-style:none;margin-top:14px}
+  .about li{padding:8px 0 8px 30px;position:relative}
+  .about li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:700}
+
+  /* tabs */
+  .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+  .tab{background:var(--card);border:2px solid transparent;color:var(--ink);padding:10px 20px;border-radius:999px;font-weight:600;font-size:15px;cursor:pointer;box-shadow:var(--shadow);transition:.2s}
+  .tab:hover{color:var(--accent)}
+  .tab.active{background:var(--accent);color:#fff}
+  .panel{display:none}
+  .panel.active{display:block}
+  .sub{font-size:20px;margin:30px 0 14px}
+  .sub:first-child{margin-top:0}
+
+  /* price cards */
+  .price{position:relative;display:flex;flex-direction:column}
+  .price.featured{border:2px solid var(--accent)}
+  .badge{position:absolute;top:-12px;right:20px;background:var(--accent);color:#fff;font-size:12px;padding:4px 12px;border-radius:999px;font-weight:600}
+  .price .meta{font-size:14px;color:var(--accent);font-weight:600;margin-bottom:6px}
+  .price .desc{font-style:italic;margin-bottom:10px}
+  .amount{font-size:32px;font-weight:800;margin:8px 0 4px}
+  .amount small{font-size:14px;font-weight:500;color:var(--muted)}
+  .old{text-decoration:line-through;color:var(--muted);font-size:18px;font-weight:500;margin-right:6px}
+  .price ul{list-style:none;margin:14px 0 20px;flex:1}
+  .price li{padding:6px 0 6px 22px;position:relative;color:var(--muted);font-size:15px;border-bottom:1px dashed #eee}
+  .price li::before{content:"•";position:absolute;left:6px;color:var(--accent)}
+  .promo{background:#fff7e6;border:1px dashed #e0c48a;color:#8a6420;padding:6px 12px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:12px}
+  .hint{margin-top:22px;font-size:13px;color:var(--muted)}
+
+  /* price list rows */
+  .list{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:6px 24px}
+  .row{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid #f0eadf;align-items:baseline}
+  .row:last-child{border-bottom:0}
+  .row .n{font-weight:500}
+  .row .n small{display:block;color:var(--muted);font-size:13px;font-weight:400}
+  .row .p{font-weight:700;white-space:nowrap;color:var(--accent-dark)}
+
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:12px 10px;text-align:left;font-size:15px;border-bottom:1px solid #f0eadf}
+  th{color:var(--muted);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.4px}
+  td.p{font-weight:700;color:var(--accent-dark);white-space:nowrap}
+  .scroll{overflow-x:auto}
+
+  details{background:var(--card);border-radius:14px;padding:18px 22px;margin-bottom:12px;box-shadow:var(--shadow)}
+  summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+  summary::after{content:"+";color:var(--accent);font-size:22px;line-height:1}
+  details[open] summary::after{content:"–"}
+  details p{margin-top:10px;color:var(--muted);font-size:15px}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  form{background:var(--card);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+  label{display:block;font-size:14px;font-weight:600;margin:12px 0 6px}
+  input,textarea,select{width:100%;padding:12px 14px;border:1px solid #ddd5c7;border-radius:12px;font:inherit;background:#fffdfa}
+  input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);border-color:transparent}
+  textarea{min-height:110px;resize:vertical}
+  form .btn{margin-top:18px;width:100%}
+  .contacts{background:var(--accent-dark);color:#fff;border-radius:var(--radius);padding:32px}
+  .contacts h3{font-size:22px;margin-bottom:18px}
+  .c-item{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+  .c-item span.i{font-size:22px}
+  .c-item small{display:block;opacity:.75;font-size:13px}
+  .c-item a{font-weight:600;font-size:19px}
+  .contacts .btn{background:#fff;color:var(--accent-dark);margin-top:8px}
+
+  footer{padding:30px 0;text-align:center;color:var(--muted);font-size:14px;border-top:1px solid #eee6da}
+
+  @media(max-width:820px){
+    .hero-grid,.about-grid,.two{grid-template-columns:1fr}
+    nav ul{display:none;position:absolute;top:64px;left:0;right:0;background:var(--bg);flex-direction:column;padding:18px 20px;gap:14px;border-bottom:1px solid #eee6da}
+    nav ul.open{display:flex}
+    .burger{display:block}
+    section{padding:54px 0}
+    .list{padding:4px 16px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo"><img src="logo.png" alt="80/20 wellness pilates spa" class="logo-img" onerror="this.outerHTML='80<span>/</span>20'"></a>
+    <nav>
+      <ul id="menu">
+        <li><a href="#about">О клубе</a></li>
+        <li><a href="#services">Услуги</a></li>
+        <li><a href="#prices">Цены</a></li>
+        <li><a href="#support">Поддержка</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+    </nav>
+    <button class="burger" aria-label="Меню" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="tag">Астана · Пилатес · SPA · Массаж</span>
+      <h1>Здоровое тело — это 80% привычек и 20% тренировок</h1>
+      <p>Клуб здорового образа жизни 80/20: пилатес на реформерах, хаммам, SPA-программы и массаж в одном месте.</p>
+      <div class="hero-btns">
+        <a class="btn" href="https://wa.me/77719684968?text=Здравствуйте!%20Хочу%20записаться" target="_blank" rel="noopener">Записаться</a>
+        <a class="btn ghost" href="#prices">Смотреть цены</a>
+      </div>
+    </div>
+    <div class="ratio">
+      <div class="big">80/20</div>
+      <p>Правильное питание, сон и движение — основа результата. Тренировки и восстановление помогают его закрепить.</p>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <h2>О клубе</h2>
+      <p class="lead" style="margin-bottom:0">Пространство, где забота о себе — это не только тренировка, но и восстановление. Пилатес на реформерах, хаммам, джакузи и массаж — всё, чтобы тело и голова отдыхали по-настоящему.</p>
+    </div>
+    <ul>
+      <li>Пилатес на реформерах: группы, мини-группы и индивидуально</li>
+      <li>SPA-программы с хаммамом и джакузи</li>
+      <li>Классический, лечебный и точечный массаж</li>
+      <li>Подходит новичкам и тем, кто возвращается к заботе о себе</li>
+    </ul>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <h2>Что мы предлагаем</h2>
+    <p class="lead">Выберите формат под вашу цель: движение, восстановление или полная перезагрузка.</p>
+    <div class="grid">
+      <div class="card"><div class="icon">🧘‍♀️</div><h3>Пилатес на реформерах</h3><p>Укрепление мышц кора, осанка, гибкость. Группа, мини-группа на двоих или индивидуальное занятие.</p></div>
+      <div class="card"><div class="icon">♨️</div><h3>SPA-программы</h3><p>Хаммам, джакузи, пилинг, массаж и полезные напитки: четыре готовые программы на 75–120 минут.</p></div>
+      <div class="card"><div class="icon">💆‍♀️</div><h3>Массаж</h3><p>Классический, антицеллюлитный, лечебный, точечный массаж тела, а также массаж лица.</p></div>
+      <div class="card"><div class="icon">🌿</div><h3>Уход за телом и кожей</h3><p>Пилинг, пенная помывка, обёртывания, маски для лица и волос.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="prices" style="background:var(--soft)">
+  <div class="wrap">
+    <h2>Прайс-лист</h2>
+    <p class="lead">Выберите раздел, чтобы посмотреть цены.</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="pilates">Пилатес</button>
+      <button class="tab" data-tab="spa">SPA-программы</button>
+      <button class="tab" data-tab="care">Хаммам и уход</button>
+      <button class="tab" data-tab="massage">Массаж</button>
+    </div>
+
+    <!-- ПИЛАТЕС -->
+    <div class="panel active" id="pilates">
+      <h3 class="sub">Групповые занятия на реформерах</h3>
+      <div class="list" style="margin-bottom:20px">
+        <div class="row"><div class="n">Пробное занятие<small>только один раз</small></div><div class="p">6 500 ₸</div></div>
+        <div class="row"><div class="n">Разовое занятие<small>можно повторять</small></div><div class="p">6 900 ₸</div></div>
+      </div>
+      <div class="grid">
+        <div class="card price">
+          <h3>4 занятия</h3>
+          <div class="amount">26 000 ₸</div>
+          <ul><li>Срок действия — месяц после активации</li></ul>
+          <a class="btn ghost" href="#contacts">Записаться</a>
+        </div>
+        <div class="card price featured">
+          <span class="badge">Популярный</span>
+          <h3>8 занятий</h3>
+          <div class="amount">49 000 ₸</div>
+          <ul><li>Срок действия — месяц после активации</li><li>+1 занятие с возможностью заморозки</li></ul>
+          <a class="btn" href="#contacts">Выбрать</a>
+        </div>
+        <div class="card price">
+          <h3>12 занятий</h3>
+          <div class="amount">68 000 ₸</div>
+          <ul><li>Срок действия — месяц после активации</li><li>+2 занятия с возможностью заморозки</li></ul>
+          <a class="btn ghost" href="#contacts">Выбрать</a>
+        </div>
+      </div>
+
+      <h3 class="sub">Мини-группа сплит (2 человека)</h3>
+      <div class="list">
+        <div class="scroll"><table>
+          <tr><th>Количество занятий</th><th>Цена с каждого</th></tr>
+          <tr><td>1 занятие</td><td class="p">10 000 ₸</td></tr>
+          <tr><td>4 занятия</td><td class="p">26 000 ₸</td></tr>
+          <tr><td>8 занятий</td><td class="p">70 000 ₸</td></tr>
+          <tr><td>12 занятий</td><td class="p">94 800 ₸</td></tr>
+        </table></div>
+      </div>
+
+      <h3 class="sub">Индивидуальные занятия</h3>
+      <div class="list">
+        <div class="scroll"><table>
+          <tr><th>Количество занятий</th><th>Цена</th></tr>
+          <tr><td>1 занятие</td><td class="p">18 000 ₸</td></tr>
+          <tr><td>4 занятия</td><td class="p">68 668 ₸</td></tr>
+          <tr><td>8 занятий</td><td class="p">128 000 ₸</td></tr>
+          <tr><td>12 занятий</td><td class="p">180 000 ₸</td></tr>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- SPA-ПРОГРАММЫ -->
+    <div class="panel" id="spa">
+      <div class="grid">
+        <div class="card price">
+          <div class="meta">75 минут</div>
+          <h3>DETOX RESET</h3>
+          <div class="desc">Глубокая перезагрузка и снятие напряжения</div>
+          <ul><li>Хаммам + пилинг</li><li>Джакузи</li><li>Расслабляющий массаж</li><li>Детокс-напиток</li></ul>
+          <div class="promo">🎉 Soft Opening: 24 000 ₸</div>
+          <div class="amount"><span class="old">27 500 ₸</span>24 000 ₸</div>
+          <a class="btn" href="#contacts">Записаться</a>
+        </div>
+        <div class="card price">
+          <div class="meta">90 минут</div>
+          <h3>GLOW &amp; LIFT</h3>
+          <div class="desc">Сияние кожи и расслабление лица</div>
+          <ul><li>Хаммам</li><li>Расслабляющий массаж</li><li>Массаж лица</li><li>Маска</li><li>Антиоксидантный напиток</li></ul>
+          <div class="amount">30 000 ₸</div>
+          <a class="btn ghost" href="#contacts">Записаться</a>
+        </div>
+        <div class="card price">
+          <div class="meta">90 минут</div>
+          <h3>BODY SLIM 80/20</h3>
+          <div class="desc">Снижение объёмов, лёгкость и энергия</div>
+          <ul><li>Хаммам</li><li>Джакузи</li><li>Классический массаж</li><li>Белковый коктейль + чай</li></ul>
+          <div class="amount">33 000 ₸</div>
+          <a class="btn ghost" href="#contacts">Записаться</a>
+        </div>
+        <div class="card price featured">
+          <span class="badge">Premium</span>
+          <div class="meta">120 минут</div>
+          <h3>ROYAL RECOVERY</h3>
+          <div class="desc">Комплексное восстановление уровня premium</div>
+          <ul><li>Хаммам + пилинг</li><li>Джакузи</li><li>Классический массаж</li><li>Массаж головы</li><li>Массаж лица</li><li>Напиток + полезный десерт</li></ul>
+          <div class="amount">50 000 ₸</div>
+          <a class="btn" href="#contacts">Записаться</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ХАММАМ И УХОД -->
+    <div class="panel" id="care">
+      <div class="list">
+        <div class="row"><div class="n">Прогрев в турецком хаммаме<small>30 минут</small></div><div class="p">5 000 ₸</div></div>
+        <div class="row"><div class="n">Хаммам + гидромассажная ванна с аэромассажем<small>45 минут</small></div><div class="p">15 000 ₸</div></div>
+        <div class="row"><div class="n">Пилинг тела</div><div class="p">10 000 ₸</div></div>
+        <div class="row"><div class="n">Пенная помывка тела</div><div class="p">10 000 ₸</div></div>
+        <div class="row"><div class="n">Маска для лица<small>Herbalife / глина</small></div><div class="p">5 000 ₸</div></div>
+        <div class="row"><div class="n">Маска для волос</div><div class="p">5 000 ₸</div></div>
+        <div class="row"><div class="n">Обёртывание тела + маска для лица в подарок<small>мёд / шоколад / морская соль / водоросли / глина · 60 минут</small></div><div class="p">20 000 ₸</div></div>
+      </div>
+    </div>
+
+    <!-- МАССАЖ -->
+    <div class="panel" id="massage">
+      <h3 class="sub">Массаж тела</h3>
+      <div class="list">
+        <div class="row"><div class="n">Классический массаж тела<small>50 минут</small></div><div class="p">15 000 ₸</div></div>
+        <div class="row"><div class="n">Антицеллюлитный массаж<small>90 минут</small></div><div class="p">25 000 ₸</div></div>
+      </div>
+
+      <h3 class="sub">Лечебный массаж</h3>
+      <div class="list">
+        <div class="row"><div class="n">Лечебный массаж спины и проблемных зон<small>75 минут</small></div><div class="p">20 000 ₸</div></div>
+        <div class="row"><div class="n">Массаж шейно-воротниковой зоны<small>40 минут</small></div><div class="p">12 000 ₸</div></div>
+        <div class="row"><div class="n">Массаж ног и стоп<small>40 минут</small></div><div class="p">10 000 ₸</div></div>
+      </div>
+
+      <h3 class="sub">Точечный массаж</h3>
+      <div class="list">
+        <div class="row"><div class="n">Точечный массаж тела<small>75 минут</small></div><div class="p">20 000 ₸</div></div>
+        <div class="row"><div class="n">Точечный массаж головы<small>40 минут</small></div><div class="p">10 000 ₸</div></div>
+      </div>
+
+      <h3 class="sub">Массаж лица</h3>
+      <div class="list">
+        <div class="row"><div class="n">Проблемная кожа<small>45 минут</small></div><div class="p">10 000 ₸</div></div>
+        <div class="row"><div class="n">Лифтинг-эффект<small>45 минут</small></div><div class="p">7 000 ₸</div></div>
+        <div class="row"><div class="n">Классический массаж лица + маска<small>40 минут</small></div><div class="p">5 000 ₸</div></div>
+        <div class="row"><div class="n">Буккальный массаж лица<small>60 минут</small></div><div class="p">10 000 ₸</div></div>
+      </div>
+    </div>
+
+    <p class="hint">Цены указаны в тенге. Актуальную стоимость и свободное время уточняйте у администратора.</p>
+  </div>
+</section>
+
+<section id="support">
+  <div class="wrap">
+    <h2>Поддержка</h2>
+    <p class="lead">Ответим на вопросы по записи, абонементам и работе сайта.</p>
+    <div class="two">
+      <div>
+        <details><summary>Как записаться?</summary><p>Напишите нам в WhatsApp или позвоните по номеру из раздела «Контакты». Мы подберём удобное время.</p></details>
+        <details><summary>Нужна ли подготовка для пилатеса?</summary><p>Нет, занятия подходят для любого уровня. Для первого знакомства есть пробное занятие.</p></details>
+        <details><summary>Сколько действует абонемент?</summary><p>Абонементы на пилатес действуют месяц после активации. В абонементах на 8 и 12 занятий предусмотрены занятия с возможностью заморозки.</p></details>
+        <details><summary>Можно ли прийти на SPA вдвоём?</summary><p>Уточните у администратора доступное время и условия для визита вдвоём.</p></details>
+        <details><summary>Проблема с сайтом или записью?</summary><p>Опишите её в форме рядом, и мы свяжемся с вами.</p></details>
+      </div>
+
+      <form id="supportForm">
+        <h3>Написать в поддержку</h3>
+        <label for="name">Ваше имя</label>
+        <input id="name" required placeholder="Например, Айгерим">
+        <label for="topic">Тема</label>
+        <select id="topic">
+          <option>Запись на пилатес</option>
+          <option>Запись на SPA / массаж</option>
+          <option>Абонементы и оплата</option>
+          <option>Проблема с сайтом</option>
+          <option>Другое</option>
+        </select>
+        <label for="msg">Сообщение</label>
+        <textarea id="msg" required placeholder="Опишите ваш вопрос"></textarea>
+        <button class="btn" type="submit">Отправить в WhatsApp</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="contacts" style="padding-top:0">
+  <div class="wrap">
+    <div class="contacts">
+      <h3>Контакты</h3>
+      <div class="c-item"><span class="i">📞</span><div><small>Телефон / WhatsApp</small><a href="tel:+77719684968">+7 771 968 49 68</a></div></div>
+      <div class="c-item"><span class="i">📍</span><div><small>Адрес</small>г. Астана</div></div>
+      <a class="btn" href="https://wa.me/77719684968" target="_blank" rel="noopener">Написать в WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">© 80/20 — клуб здорового образа жизни, Астана</div>
+</footer>
+
+<script>
+  document.querySelectorAll('#menu a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('menu').classList.remove('open')));
+
+  // вкладки прайса
+  document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  }));
+
+  // форма поддержки -> WhatsApp
+  document.getElementById('supportForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const text = 'Здравствуйте! Меня зовут ' + document.getElementById('name').value +
+      '.\nТема: ' + document.getElementById('topic').value +
+      '\n' + document.getElementById('msg').value;
+    window.open('https://wa.me/77719684968?text=' + encodeURIComponent(text), '_blank');
+  });
+</script>
+</body>
+</html>
